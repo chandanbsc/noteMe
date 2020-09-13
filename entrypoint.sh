@@ -5,13 +5,14 @@ touch ./logs/gunicorn.log
 touch ./logs/gunicorn-access.log
 tail -n 0 -f ./logs/gunicorn*.log &
 
-export DJANGO_SETTINGS_MODULE=projectx.settings
+export DJANGO_SETTINGS_MODULE=noteMe.settings
 
-exec gunicorn projectx.wsgi:application \
-    --name projectx_django \
+exec gunicorn noteMe.wsgi:application \
+    --name pnoteMe_django \
+    --chdir=/opt/noteMe \
     --bind 0.0.0.0:8000 \
     --workers 5 \
     --log-level=info \
-    --log-file=./logs/gunicorn.log \
-    --access-logfile=./logs/gunicorn-access.log \
+    --log-file=../logs/gunicorn.log \
+    --access-logfile=../logs/gunicorn-access.log \
 "$@"

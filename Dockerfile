@@ -6,12 +6,12 @@ MAINTAINER Maintaner CK
 
 # Update the default application repository sources list
 RUN apt-get update && apt-get install -y \
-    python-dev \
-    python \
-    python-pip \
-    python-setuptools \
+    python3-dev \
+    python3 \
+    python3-pip \
+    python3-setuptools \
     build-essential \
-    python-dev \
+    python3-dev \
     git
 
 # Set variables for project name, and where to place files in container.
@@ -27,10 +27,13 @@ RUN mkdir logs
 COPY . $CONTAINER_PROJECT
 
 # Install Python dependencies
-RUN pip install -r $CONTAINER_PROJECT/requirements.txt
-RUN pip install gunicorn
+RUN pip3 install -r $CONTAINER_PROJECT/requirements.txt
+RUN pip3 install gunicorn
+
+# Expose the port
+EXPOSE 8000
 
 # Copy and set entrypoint
-WORKDIR $CONTAINER_PROJECT
+WORKDIR $CONTAINER_HOME
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
